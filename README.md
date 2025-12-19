@@ -85,8 +85,8 @@ Where:
 * **$R_{\text{ref}}, R_{\delta}, Z$**: Positive (semi-)definite weighting matrices.
 
 The cost function balances three objectives:
-1.  **Reference Tracking** (Term $\|u_0 - u_{\text{ref}}\|_{R_{\text{ref}}}^2$): The first control input $u_0$ should be as close as possible to the desired command $u_{\text{ref}}$.
-2.  **Control Effort Minimization** (Term $|u_k - x_{\text{vel},k}|_{R_{\delta}}^2$): Penalizes the deviation of the target velocity $u_k$ from the actual velocity $x_{\text{vel},k}$, which reduces aggressive accelerations and promotes smooth motion.
+1.  **Reference Tracking** (Term $\|u_0 - u_{\text{ref}}\|_{R_{\text{ref}}}^2$ ): The first control input $u_0$ should be as close as possible to the desired command $u_{\text{ref}}$.
+2.  **Control Effort Minimization** (Term $\|u_k - x_{\text{vel},k}\|_{R_{\delta}}^2$ ): Penalizes the deviation of the target velocity $u_k$ from the actual velocity $x_{\text{vel},k}$, which reduces aggressive accelerations and promotes smooth motion.
 3.  **Penalty for Soft Constraint Violation** (Term $\|s_k\|^2_{Z}$): Penalizes the violation of the collision avoidance constraints.
 
 ---
@@ -102,11 +102,15 @@ The minimization is performed subject to the following [constraints](scripts/saf
 2.  **State and Input Constraints**:
     $$x_k \in \mathcal{X}, \quad u_k \in \mathcal{U}$$
     These are typically box constraints. The velocity constraint is direction-dependent on the reference $v_{c,\text{ref},k}$:
-    $$v_{c,k} \in 
+
+    $$
+    v_{c,k} \in 
     \begin{cases}
     [0, \min(v_{\max}, v_{c,\text{ref},k})] & \text{ for } v_{c,\text{ref},k} \ge 0 \\\\
     [\max(v_{\min}, v_{c,\text{ref},k}), 0] & \text{ for } v_{c,\text{ref},k} < 0
-    \end{cases}$$
+    \end{cases}
+    $$
+
     The angular velocity is constrained by its limits:
     $$\omega_k \in  [\omega_{\min}, \omega_{\max}]$$
 
