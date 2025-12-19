@@ -33,9 +33,9 @@ x =
 \begin{bmatrix}
 p_x \\\\
 p_y \\\\
-\psi \\\\
+psi \\\\
 v \\\\
-\omega
+omega
 \end{bmatrix}
 $$
 
