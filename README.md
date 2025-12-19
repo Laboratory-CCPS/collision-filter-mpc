@@ -27,16 +27,24 @@ The goal of the safety filter is to solve an Optimal Control Problem (OCP) over 
 
 The underlying [model](scripts/safety_filter_scripts/safety_filter_ocp/skid_steer_model.py) is a skid-steer model.
 
-* **State Vector** $x \in \mathbb{R}^5$:
-  > $$
-  > x = \begin{bmatrix}
-  > p_x \\\\ p_y \\\\ \psi \\\\ v \\\\ \omega
-  > \end{bmatrix}
-  > $$
-  >
-  > Where $(p_x, p_y)$ are the position, $\psi$ is the orientation, $v$ is the linear velocity, and $\omega$ is the angular velocity.
+* **State Vector** $x \in \mathbb{R}^5$:  
+    Where $(p_x, p_y)$ are the position, $\psi$ is the orientation, $v$ is the linear velocity, and $\omega$ is the angular velocity.
 
-* **Control Input Vector** $u \in \mathbb{R}^2$:
+$$
+x = 
+\begin{bmatrix}
+p_x \\\\
+p_y \\\\
+\psi \\\\
+v \\\\
+\omega
+\end{bmatrix}
+$$
+
+
+
+* **Control Input Vector** $u \in \mathbb{R}^2$:  
+    These are the target velocities sent to the system.
     
 $$ u = 
 \begin{bmatrix} 
@@ -45,9 +53,9 @@ v_{c} \\\\
 \end{bmatrix} 
 $$
 
-These are the target velocities sent to the system.
 
-* **Continuous System Dynamics** $\dot{x} = f(x, u)$: 
+* **Continuous System Dynamics** $\dot{x} = f(x, u)$:  
+    The parameters $\tau_v$ and $\tau_\omega$ are time constants that model the actuator dynamics.
     
 $$
 \dot{x} = 
@@ -59,8 +67,6 @@ v \sin(\psi) \\\\
 (\omega_{c} - \omega) / \tau_\omega
 \end{bmatrix}
 $$  
-
-The parameters $\tau_v$ and $\tau_\omega$ are time constants that model the actuator dynamics.
 
 ---
 
@@ -98,7 +104,7 @@ $$
     
 
 2.  **State and Input Constraints**:  
-    These are typically box constraints. The velocity constraint is direction-dependent on the reference $v_{c,\text{ref},k}$:
+    These are typically box constraints. The velocity constraint is direction-dependent on the reference $v_{c,\text{ref},k}$ and constraint by its limits $\omega_k \in  [\omega_{\min}, \omega_{\max}]$:
 
 $$
 x_k \in \mathcal{X}, \quad u_k \in \mathcal{U}
@@ -113,11 +119,9 @@ v_{c,k} \in
 \end{cases}
 $$
 
-The angular velocity is constrained by its limits:
-$$\omega_k \in  [\omega_{\min}, \omega_{\max}]$$
 
 3.  **Collision Avoidance (Soft Constraints)**:  
-    For each obstacle $i$, the distance from the robot to the obstacle must exceed a safety radius $r_{\text{unsafe}}$. This is formulated as a soft constraint to ensure feasibility:
+    For each obstacle $i$, the distance from the robot to the obstacle must exceed a safety radius $r_{\text{unsafe}}$. This is formulated as a soft constraint to ensure feasibility, where the slack variables must be non-negative: $s_k \ge 0$:
 
 $$
 \begin{align*}
@@ -125,8 +129,6 @@ $$
 (p_{x, \text{rear}, k} - x_i)^2 + (p_{y, \text{rear}, k} - y_i)^2 - r^2_{\text{unsafe}} &\ge -s_{k, i, \text{rear}}
 \end{align*}
 $$
-
-    where the slack variables must be non-negative: $s_k \ge 0$.
 
 ---
 
