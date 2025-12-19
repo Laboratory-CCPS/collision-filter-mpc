@@ -27,33 +27,33 @@ The goal of the safety filter is to solve an Optimal Control Problem (OCP) over 
 
 The underlying [model](scripts/safety_filter_scripts/safety_filter_ocp/skid_steer_model.py) is a skid-steer model.
 
-* **State Vector** $ x \in \mathbb{R}^5 $:  
-    $$ x = 
+* **State Vector** $x \in \mathbb{R}^5$:  
+    $$x = 
     \begin{bmatrix} 
-    p_x \\ 
-    p_y \\ 
-    \psi \\ 
-    v \\ 
-    \omega 
+        p_x \\ 
+        p_y \\ 
+        \psi \\ 
+        v \\ 
+        \omega 
     \end{bmatrix} $$  
     Where $(p_x, p_y)$ are the position, $\psi$ is the orientation, $v$ is the linear velocity, and $\omega$ is the angular velocity.
 
-* **Control Input Vector** $ u \in \mathbb{R}^2 $:  
-    $$ u = 
+* **Control Input Vector** $u \in \mathbb{R}^2$:  
+    $$u = 
     \begin{bmatrix} 
-    v_{c} \\ 
-    \omega_{c} 
+        v_{c} \\ 
+        \omega_{c} 
     \end{bmatrix} $$  
     These are the target velocities sent to the system.
 
-* **Continuous System Dynamics** $ \dot{x} = f(x, u) $:  
-    $$ \dot{x} = 
-    \begin{bmatrix}
-    v \cos(\psi) \\
-    v \sin(\psi) \\
-    \omega \\
-    (v_{c} - v) / \tau_v \\
-    (\omega_{c} - \omega) / \tau_\omega
+* **Continuous System Dynamics** $\dot{x} = f(x, u)$:  
+    $$\dot{x} = 
+        \begin{bmatrix}
+        v \cos(\psi) \\
+        v \sin(\psi) \\
+        \omega \\
+        (v_{c} - v) / \tau_v \\
+        (\omega_{c} - \omega) / \tau_\omega
     \end{bmatrix}
     $$  
     The parameters $\tau_v$ and $\tau_\omega$ are time constants that model the actuator dynamics.
@@ -64,7 +64,7 @@ The underlying [model](scripts/safety_filter_scripts/safety_filter_ocp/skid_stee
 
 The [cost](scripts/safety_filter_scripts/safety_filter_ocp/solver.py#L83-L110) function $J$ is designed to find an optimal, safe control sequence that adheres to all constraints while staying as close as possible to the original, potentially unsafe reference command.
 
-$$ \min_{u, s} J = \underbrace{ \|u_0 - u_{\text{ref}}\|_{R_{\text{ref}}}^2 + \sum_{k=0}^{N-1} \|u_k - x_{\text{vel},k}\|_{R_{\delta}}^2 }_{\text{Initial and Stage Cost}} + \underbrace{ \sum_{k=1}^{N-1} \left( z_{l,k}^T s_{l,k} + \frac{1}{2}s_{l,k}^T Z_{l,k} s_{l,k} \right) }_{\text{Slack Cost}}$$
+$$\min_{u, s} J = \underbrace{ \|u_0 - u_{\text{ref}}\|_{R_{\text{ref}}}^2 + \sum_{k=0}^{N-1} \|u_k - x_{\text{vel},k}\|_{R_{\delta}}^2 }_{\text{Initial and Stage Cost}} + \underbrace{ \sum_{k=1}^{N-1} \left( z_{l,k}^T s_{l,k} + \frac{1}{2}s_{l,k}^T Z_{l,k} s_{l,k} \right) }_{\text{Slack Cost}}$$
 
 Where:
 * **$u_k$**: The optimized, *safe* control input at time step $k$.
@@ -74,7 +74,7 @@ Where:
 * **$R_{\text{ref}}, R_{\delta}, Z$**: Positive (semi-)definite weighting matrices.
 
 The cost function balances three objectives:
-1.  **Reference Tracking** (Term $|u_0 - u_{\text{ref}}|_{R_{\text{ref}}}^2$): The first control input $u_0$ should be as close as possible to the desired command $u_{\text{ref}}$.
+1.  **Reference Tracking** (Term $\|u_0 - u_{\text{ref}}\|_{R_{\text{ref}}}^2$): The first control input $u_0$ should be as close as possible to the desired command $u_{\text{ref}}$.
 2.  **Control Effort Minimization** (Term $|u_k - x_{\text{vel},k}|_{R_{\delta}}^2$): Penalizes the deviation of the target velocity $u_k$ from the actual velocity $x_{\text{vel},k}$, which reduces aggressive accelerations and promotes smooth motion.
 3.  **Penalty for Soft Constraint Violation** (Term $\|s_k\|^2_{Z}$): Penalizes the violation of the collision avoidance constraints.
 
@@ -85,28 +85,26 @@ The cost function balances three objectives:
 The minimization is performed subject to the following [constraints](scripts/safety_filter_scripts/safety_filter_ocp/solver.py#L112-125) for all time steps $k \in \{0, \dots, N-1\}$:
 
 1.  **Discrete System Dynamics**:
-    $$ x_{k+1} = F(x_k, u_k)$$
+    $$x_{k+1} = F(x_k, u_k)$$
     Here, $F(x_k, u_k)$ is the RK4 discretized form of the continuous dynamics $f(x, u)$.
 
 2.  **State and Input Constraints**:
-    $$ x_k \in \mathcal{X}, \quad u_k \in \mathcal{U} $$
+    $$x_k \in \mathcal{X}, \quad u_k \in \mathcal{U}$$
     These are typically box constraints. The velocity constraint is direction-dependent on the reference $v_{c,\text{ref},k}$:
-    $$ v_{c,k} \in 
+    $$v_{c,k} \in 
     \begin{cases}
     [0, \min(v_{\max}, v_{c,\text{ref},k})] & \text{ for } v_{c,\text{ref},k} \ge 0 \\
     [\max(v_{\min}, v_{c,\text{ref},k}), 0] & \text{ for } v_{c,\text{ref},k} < 0
-    \end{cases}
-    $$
+    \end{cases}$$
     The angular velocity is constrained by its limits:
     $$\omega_k \in  [\omega_{\min}, \omega_{\max}]$$
 
 3.  **Collision Avoidance (Soft Constraints)**:
     For each obstacle $i$, the distance from the robot to the obstacle must exceed a safety radius $r_{\text{unsafe}}$. This is formulated as a soft constraint to ensure feasibility:
-    $$ \begin{align*}
+    $$\begin{align*}
     (p_{x, \text{front}, k} - x_i)^2 + (p_{y, \text{front}, k} - y_i)^2 - r^2_{\text{unsafe}} &\ge -s_{k, i, \text{front}} \\
     (p_{x, \text{rear}, k} - x_i)^2 + (p_{y, \text{rear}, k} - y_i)^2 - r^2_{\text{unsafe}} &\ge -s_{k, i, \text{rear}}
-    \end{align*}
-    $$
+    \end{align*}$$
     where the slack variables must be non-negative: $s_k \ge 0$.
 
 ---
