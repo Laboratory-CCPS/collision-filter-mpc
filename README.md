@@ -125,12 +125,12 @@ $$
 3.  **Collision Avoidance (Soft Constraints)**:  
     For each obstacle $i$, the distance from the robot to the obstacle must exceed a safety radius $r_{\text{unsafe}}$. This is formulated as a soft constraint to ensure feasibility:
 
-    $$
-    \begin{align*}
-    (p_{x, \text{front}, k} - x_i)^2 + (p_{y, \text{front}, k} - y_i)^2 - r^2_{\text{unsafe}} &\ge -s_{k, i, \text{front}} \\\\
-    (p_{x, \text{rear}, k} - x_i)^2 + (p_{y, \text{rear}, k} - y_i)^2 - r^2_{\text{unsafe}} &\ge -s_{k, i, \text{rear}}
-    \end{align*}
-    $$
+$$
+\begin{align*}
+(p_{x, \text{front}, k} - x_i)^2 + (p_{y, \text{front}, k} - y_i)^2 - r^2_{\text{unsafe}} &\ge -s_{k, i, \text{front}} \\\\
+(p_{x, \text{rear}, k} - x_i)^2 + (p_{y, \text{rear}, k} - y_i)^2 - r^2_{\text{unsafe}} &\ge -s_{k, i, \text{rear}}
+\end{align*}
+$$
 
     where the slack variables must be non-negative: $s_k \ge 0$.
 
