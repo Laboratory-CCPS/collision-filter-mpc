@@ -30,11 +30,11 @@ The underlying [model](scripts/safety_filter_scripts/safety_filter_ocp/skid_stee
 * **State Vector** $x \in \mathbb{R}^5$:  
 $$
 x = \begin{bmatrix}
-    p_x \\
-    p_y \\
-    \psi \\
-    v \\
-    \omega
+p_x \\\\
+p_y \\\\
+\psi \\\\
+v \\\\
+\omega
 \end{bmatrix}
 $$  
 
