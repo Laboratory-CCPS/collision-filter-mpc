@@ -29,20 +29,14 @@ The underlying [model](scripts/safety_filter_scripts/safety_filter_ocp/skid_stee
 
 * **State Vector** $x \in \mathbb{R}^5$:  
     $$x = 
-    \begin{bmatrix} 
-        p_x \\ 
-        p_y \\ 
-        \psi \\ 
-        v \\ 
-        \omega 
-    \end{bmatrix} $$  
+    \begin{bmatrix} p_x \\ p_y \\ \psi \\ v \\ \omega \end{bmatrix} $$  
     Where $(p_x, p_y)$ are the position, $\psi$ is the orientation, $v$ is the linear velocity, and $\omega$ is the angular velocity.
 
 * **Control Input Vector** $u \in \mathbb{R}^2$:  
     $$u = 
     \begin{bmatrix} 
-        v_{c} \\ 
-        \omega_{c} 
+    v_{c} \\ 
+    \omega_{c} 
     \end{bmatrix} $$  
     These are the target velocities sent to the system.
 
