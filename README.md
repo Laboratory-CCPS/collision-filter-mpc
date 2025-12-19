@@ -106,9 +106,9 @@ $$
 2.  **State and Input Constraints**:  
     These are typically box constraints. The velocity constraint is direction-dependent on the reference $v_{c,\text{ref},k}$:
 
-$$
-x_k \in \mathcal{X}, \quad u_k \in \mathcal{U}
-$$  
+    $$
+    x_k \in \mathcal{X}, \quad u_k \in \mathcal{U}
+    $$  
 
 
 $$
