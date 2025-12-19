@@ -34,9 +34,9 @@ x =
 \begin{bmatrix}
 p_x \\\\
 p_y \\\\
-psi \\\\
+\psi \\\\
 v \\\\
-omega
+\omega
 \end{bmatrix}
 $$
 
@@ -53,7 +53,7 @@ v_{c} \\\
     These are the target velocities sent to the system.
 
 * **Continuous System Dynamics** $\dot{x} = f(x, u)$: 
- 
+
 $$
 \dot{x} = 
 \begin{bmatrix}
