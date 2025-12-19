@@ -84,9 +84,9 @@ Where:
 * **$R_{\text{ref}}, R_{\delta}, Z$**: Positive (semi-)definite weighting matrices.
 
 The cost function balances three objectives:
-1.  **Reference Tracking** (Term $ u_0 - u_{\text{ref}}_{R_{\text{ref}}}^2 $): The first control input $u_0$ should be as close as possible to the desired command $u_{\text{ref}}$.
-2.  **Control Effort Minimization** (Term $ \rVert u_k - x_{\text{vel},k} \lVert _{R_{\delta}}^2 $): Penalizes the deviation of the target velocity $u_k$ from the actual velocity $x_{\text{vel},k}$, which reduces aggressive accelerations and promotes smooth motion.
-3.  **Penalty for Soft Constraint Violation** (Term $\|s_k\|^2_{Z}$): Penalizes the violation of the collision avoidance constraints.
+1. **Reference Tracking** (Term $\lVert u_0 - u_{\text{ref}} \rVert_{R_{\text{ref}}}^2$): The first control input $u_0$ should be as close as possible to the desired command $u_{\text{ref}}$.
+2. **Control Effort Minimization** (Term $\lVert u_k - x_{\text{vel},k} \rVert_{R_{\delta}}^2$): Penalizes the deviation of the target velocity $u_k$ from the actual velocity $x_{\text{vel},k}$, which reduces aggressive accelerations and promotes smooth motion.
+3. **Penalty for Soft Constraint Violation** (Term $\|s_k\|^2_{Z}$): Penalizes the violation of the collision avoidance constraints.
 
 ---
 
