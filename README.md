@@ -44,8 +44,7 @@ $$
 
 * **Control Input Vector** $u \in \mathbb{R}^2$:
 
-$$
-u = 
+$$ u = 
 \begin{bmatrix} 
 v_{c} \\\\ 
 \omega_{c} 
@@ -85,8 +84,8 @@ Where:
 * **$R_{\text{ref}}, R_{\delta}, Z$**: Positive (semi-)definite weighting matrices.
 
 The cost function balances three objectives:
-1.  **Reference Tracking** (Term $\|u_0 - u_{\text{ref}}\|_{R_{\text{ref}}}^2$ ): The first control input $u_0$ should be as close as possible to the desired command $u_{\text{ref}}$.
-2.  **Control Effort Minimization** (Term $\|u_k - x_{\text{vel},k}\|_{R_{\delta}}^2$ ): Penalizes the deviation of the target velocity $u_k$ from the actual velocity $x_{\text{vel},k}$, which reduces aggressive accelerations and promotes smooth motion.
+1.  **Reference Tracking** (Term $\|u_0 - u_{\text{ref}}\|_{R_{\text{ref}}}^2$): The first control input $u_0$ should be as close as possible to the desired command $u_{\text{ref}}$.
+2.  **Control Effort Minimization** (Term $\|u_k - x_{\text{vel},k}\|_{R_{\delta}}^2$): Penalizes the deviation of the target velocity $u_k$ from the actual velocity $x_{\text{vel},k}$, which reduces aggressive accelerations and promotes smooth motion.
 3.  **Penalty for Soft Constraint Violation** (Term $\|s_k\|^2_{Z}$): Penalizes the violation of the collision avoidance constraints.
 
 ---
@@ -95,26 +94,35 @@ The cost function balances three objectives:
 
 The minimization is performed subject to the following [constraints](scripts/safety_filter_scripts/safety_filter_ocp/solver.py#L112-125) for all time steps $k \in \{0, \dots, N-1\}$:
 
-1.  **Discrete System Dynamics**:
-    $$x_{k+1} = F(x_k, u_k)$$
+1.  **Discrete System Dynamics**: 
     Here, $F(x_k, u_k)$ is the RK4 discretized form of the continuous dynamics $f(x, u)$.
 
-2.  **State and Input Constraints**:
-    $$x_k \in \mathcal{X}, \quad u_k \in \mathcal{U}$$
+$$
+x_{k+1} = F(x_k, u_k)
+$$
+
+    
+
+2.  **State and Input Constraints**: 
     These are typically box constraints. The velocity constraint is direction-dependent on the reference $v_{c,\text{ref},k}$:
 
-    $$
-    v_{c,k} \in 
-    \begin{cases}
-    [0, \min(v_{\max}, v_{c,\text{ref},k})] & \text{ for } v_{c,\text{ref},k} \ge 0 \\\\
-    [\max(v_{\min}, v_{c,\text{ref},k}), 0] & \text{ for } v_{c,\text{ref},k} < 0
-    \end{cases}
-    $$
+$$
+x_k \in \mathcal{X}, \quad u_k \in \mathcal{U}
+$$  
+
+
+$$
+v_{c,k} \in 
+\begin{cases}
+[0, \min(v_{\max}, v_{c,\text{ref},k})] & \text{ for } v_{c,\text{ref},k} \ge 0 \\\\
+[\max(v_{\min}, v_{c,\text{ref},k}), 0] & \text{ for } v_{c,\text{ref},k} < 0
+\end{cases}
+$$
 
     The angular velocity is constrained by its limits:
     $$\omega_k \in  [\omega_{\min}, \omega_{\max}]$$
 
-3.  **Collision Avoidance (Soft Constraints)**:
+3.  **Collision Avoidance (Soft Constraints)**:  
     For each obstacle $i$, the distance from the robot to the obstacle must exceed a safety radius $r_{\text{unsafe}}$. This is formulated as a soft constraint to ensure feasibility:
     $$\begin{align*}
     (p_{x, \text{front}, k} - x_i)^2 + (p_{y, \text{front}, k} - y_i)^2 - r^2_{\text{unsafe}} &\ge -s_{k, i, \text{front}} \\\\
