@@ -40,7 +40,7 @@ v \\\\
 \end{bmatrix}
 $$
 
-    Where $(p_x, p_y)$ are the position, $\psi$ is the orientation, $v$ is the linear velocity, and $\omega$ is the angular velocity.
+&nbsp;Where $(p_x, p_y)$ are the position, $\psi$ is the orientation, $v$ is the linear velocity, and $\omega$ is the angular velocity.
 
 * **Control Input Vector** $u \in \mathbb{R}^2$:
 
@@ -51,7 +51,7 @@ v_{c} \\\\
 \end{bmatrix} 
 $$
 
-    These are the target velocities sent to the system.
+&nbsp;These are the target velocities sent to the system.
 
 * **Continuous System Dynamics** $\dot{x} = f(x, u)$: 
 
@@ -66,7 +66,7 @@ v \sin(\psi) \\\\
 \end{bmatrix}
 $$  
 
-    The parameters $\tau_v$ and $\tau_\omega$ are time constants that model the actuator dynamics.
+&nbsp;The parameters $\tau_v$ and $\tau_\omega$ are time constants that model the actuator dynamics.
 
 ---
 
@@ -106,9 +106,9 @@ $$
 2.  **State and Input Constraints**:  
     These are typically box constraints. The velocity constraint is direction-dependent on the reference $v_{c,\text{ref},k}$:
 
-    $$
-    x_k \in \mathcal{X}, \quad u_k \in \mathcal{U}
-    $$  
+$$
+x_k \in \mathcal{X}, \quad u_k \in \mathcal{U}
+$$  
 
 
 $$
