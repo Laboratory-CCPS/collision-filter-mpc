@@ -94,7 +94,7 @@ The cost function balances three objectives:
 
 The minimization is performed subject to the following [constraints](scripts/safety_filter_scripts/safety_filter_ocp/solver.py#L112-125) for all time steps $k \in \{0, \dots, N-1\}$:
 
-1.  **Discrete System Dynamics**: 
+1.  **Discrete System Dynamics**:  
     Here, $F(x_k, u_k)$ is the RK4 discretized form of the continuous dynamics $f(x, u)$.
 
 $$
@@ -103,7 +103,7 @@ $$
 
     
 
-2.  **State and Input Constraints**: 
+2.  **State and Input Constraints**:  
     These are typically box constraints. The velocity constraint is direction-dependent on the reference $v_{c,\text{ref},k}$:
 
 $$
@@ -124,10 +124,14 @@ $$
 
 3.  **Collision Avoidance (Soft Constraints)**:  
     For each obstacle $i$, the distance from the robot to the obstacle must exceed a safety radius $r_{\text{unsafe}}$. This is formulated as a soft constraint to ensure feasibility:
-    $$\begin{align*}
+
+    $$
+    \begin{align*}
     (p_{x, \text{front}, k} - x_i)^2 + (p_{y, \text{front}, k} - y_i)^2 - r^2_{\text{unsafe}} &\ge -s_{k, i, \text{front}} \\\\
     (p_{x, \text{rear}, k} - x_i)^2 + (p_{y, \text{rear}, k} - y_i)^2 - r^2_{\text{unsafe}} &\ge -s_{k, i, \text{rear}}
-    \end{align*}$$
+    \end{align*}
+    $$
+
     where the slack variables must be non-negative: $s_k \ge 0$.
 
 ---
