@@ -29,7 +29,8 @@ The underlying [model](scripts/safety_filter_scripts/safety_filter_ocp/skid_stee
 
 * **State Vector** $x \in \mathbb{R}^5$:  
 $$
-x = \begin{bmatrix}
+x = 
+\begin{bmatrix}
 p_x \\\\
 p_y \\\\
 \psi \\\\
@@ -42,20 +43,22 @@ $$
 
 * **Control Input Vector** $u \in \mathbb{R}^2$:  
 $$
-u = \begin{bmatrix} 
-    v_{c} \\\ 
-    \omega_{c} 
+u = 
+\begin{bmatrix} 
+v_{c} \\\ 
+\omega_{c} 
 \end{bmatrix} $$  
     These are the target velocities sent to the system.
 
 * **Continuous System Dynamics** $\dot{x} = f(x, u)$:  
 $$
-\dot{x} = \begin{bmatrix}
-    v \cos(\psi) \\\
-    v \sin(\psi) \\\
-    \omega \\\
-    (v_{c} - v) / \tau_v \\\
-    (\omega_{c} - \omega) / \tau_\omega
+\dot{x} = 
+\begin{bmatrix}
+v \cos(\psi) \\\
+v \sin(\psi) \\\
+\omega \\\
+(v_{c} - v) / \tau_v \\\
+(\omega_{c} - \omega) / \tau_\omega
 \end{bmatrix}
 $$  
     The parameters $\tau_v$ and $\tau_\omega$ are time constants that model the actuator dynamics.
