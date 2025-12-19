@@ -47,9 +47,11 @@ $$
 $$
 u = 
 \begin{bmatrix} 
-v_{c} \\\ 
+v_{c} \\\\ 
 \omega_{c} 
-\end{bmatrix} $$
+\end{bmatrix} 
+$$
+
     These are the target velocities sent to the system.
 
 * **Continuous System Dynamics** $\dot{x} = f(x, u)$: 
@@ -57,13 +59,14 @@ v_{c} \\\
 $$
 \dot{x} = 
 \begin{bmatrix}
-v \cos(\psi) \\\
-v \sin(\psi) \\\
-\omega \\\
-(v_{c} - v) / \tau_v \\\
+v \cos(\psi) \\\\
+v \sin(\psi) \\\\
+\omega \\\\
+(v_{c} - v) / \tau_v \\\\
 (\omega_{c} - \omega) / \tau_\omega
 \end{bmatrix}
 $$  
+
     The parameters $\tau_v$ and $\tau_\omega$ are time constants that model the actuator dynamics.
 
 ---
@@ -101,7 +104,7 @@ The minimization is performed subject to the following [constraints](scripts/saf
     These are typically box constraints. The velocity constraint is direction-dependent on the reference $v_{c,\text{ref},k}$:
     $$v_{c,k} \in 
     \begin{cases}
-    [0, \min(v_{\max}, v_{c,\text{ref},k})] & \text{ for } v_{c,\text{ref},k} \ge 0 \\\
+    [0, \min(v_{\max}, v_{c,\text{ref},k})] & \text{ for } v_{c,\text{ref},k} \ge 0 \\\\
     [\max(v_{\min}, v_{c,\text{ref},k}), 0] & \text{ for } v_{c,\text{ref},k} < 0
     \end{cases}$$
     The angular velocity is constrained by its limits:
@@ -110,7 +113,7 @@ The minimization is performed subject to the following [constraints](scripts/saf
 3.  **Collision Avoidance (Soft Constraints)**:
     For each obstacle $i$, the distance from the robot to the obstacle must exceed a safety radius $r_{\text{unsafe}}$. This is formulated as a soft constraint to ensure feasibility:
     $$\begin{align*}
-    (p_{x, \text{front}, k} - x_i)^2 + (p_{y, \text{front}, k} - y_i)^2 - r^2_{\text{unsafe}} &\ge -s_{k, i, \text{front}} \\\
+    (p_{x, \text{front}, k} - x_i)^2 + (p_{y, \text{front}, k} - y_i)^2 - r^2_{\text{unsafe}} &\ge -s_{k, i, \text{front}} \\\\
     (p_{x, \text{rear}, k} - x_i)^2 + (p_{y, \text{rear}, k} - y_i)^2 - r^2_{\text{unsafe}} &\ge -s_{k, i, \text{rear}}
     \end{align*}$$
     where the slack variables must be non-negative: $s_k \ge 0$.
