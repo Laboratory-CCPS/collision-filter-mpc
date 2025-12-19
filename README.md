@@ -27,7 +27,7 @@ The goal of the safety filter is to solve an Optimal Control Problem (OCP) over 
 
 The underlying [model](scripts/safety_filter_scripts/safety_filter_ocp/skid_steer_model.py) is a skid-steer model.
 
-*   **State Vector** $x \in \mathbb{R}^5$:  
+* **State Vector** $x \in \mathbb{R}^5$:
 
     $$
     x = 
@@ -42,31 +42,31 @@ The underlying [model](scripts/safety_filter_scripts/safety_filter_ocp/skid_stee
 
     Where $(p_x, p_y)$ are the position, $\psi$ is the orientation, $v$ is the linear velocity, and $\omega$ is the angular velocity.
 
-*   **Control Input Vector** $u \in \mathbb{R}^2$:
+* **Control Input Vector** $u \in \mathbb{R}^2$:
     
-    $$ u = 
-    \begin{bmatrix} 
-    v_{c} \\\\ 
-    \omega_{c} 
-    \end{bmatrix} 
-    $$
-    
-    These are the target velocities sent to the system.
+$$ u = 
+\begin{bmatrix} 
+v_{c} \\\\ 
+\omega_{c} 
+\end{bmatrix} 
+$$
 
-*  **Continuous System Dynamics** $\dot{x} = f(x, u)$: 
+These are the target velocities sent to the system.
+
+* **Continuous System Dynamics** $\dot{x} = f(x, u)$: 
     
-    $$
-    \dot{x} = 
-    \begin{bmatrix}
-    v \cos(\psi) \\\\
-    v \sin(\psi) \\\\
-    \omega \\\\
-    (v_{c} - v) / \tau_v \\\\
-    (\omega_{c} - \omega) / \tau_\omega
-    \end{bmatrix}
-    $$  
-    
-    The parameters $\tau_v$ and $\tau_\omega$ are time constants that model the actuator dynamics.
+$$
+\dot{x} = 
+\begin{bmatrix}
+v \cos(\psi) \\\\
+v \sin(\psi) \\\\
+\omega \\\\
+(v_{c} - v) / \tau_v \\\\
+(\omega_{c} - \omega) / \tau_\omega
+\end{bmatrix}
+$$  
+
+The parameters $\tau_v$ and $\tau_\omega$ are time constants that model the actuator dynamics.
 
 ---
 
