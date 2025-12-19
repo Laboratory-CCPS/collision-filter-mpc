@@ -28,7 +28,7 @@ The goal of the safety filter is to solve an Optimal Control Problem (OCP) over 
 The underlying [model](scripts/safety_filter_scripts/safety_filter_ocp/skid_steer_model.py) is a skid-steer model.
 
 *   **State Vector** $x \in \mathbb{R}^5$:  
-    
+
     $$
     x = 
     \begin{bmatrix}
@@ -39,7 +39,7 @@ The underlying [model](scripts/safety_filter_scripts/safety_filter_ocp/skid_stee
     \omega
     \end{bmatrix}
     $$
-    
+
     Where $(p_x, p_y)$ are the position, $\psi$ is the orientation, $v$ is the linear velocity, and $\omega$ is the angular velocity.
 
 *   **Control Input Vector** $u \in \mathbb{R}^2$:
