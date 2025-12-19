@@ -37,7 +37,7 @@ p_y \\\\
 v \\\\
 \omega
 \end{bmatrix}
-$$  
+$$
 
     Where $(p_x, p_y)$ are the position, $\psi$ is the orientation, $v$ is the linear velocity, and $\omega$ is the angular velocity.
 
@@ -47,7 +47,7 @@ u =
 \begin{bmatrix} 
 v_{c} \\\ 
 \omega_{c} 
-\end{bmatrix} $$  
+\end{bmatrix} $$
     These are the target velocities sent to the system.
 
 * **Continuous System Dynamics** $\dot{x} = f(x, u)$:  
