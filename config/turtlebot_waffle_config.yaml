@@ -1,0 +1,27 @@
+safety_filter_mpc:
+  ros__parameters:
+    safety_filter:
+      ts: 0.025
+      timeout: 0.05
+      
+      collisions:
+        radius: 0.2
+        front_offset: 0.05
+        back_offset: 0.05
+
+      constraints:
+        lbx: [-0.5, -1.5]
+        ubx: [0.5, 1.5]
+        lbu: [-0.5, -1.5]
+        ubu: [0.5, 1.5]
+        uh: [10000.0, 10000.0]
+        lsh: [0.0, 0.0]
+        ush: [10000.0, 10000.0]
+
+      cost:
+        W_0: [15.0, 3.0, 3.0, 1.0]
+        W: [3.0, 0.5]
+        Zl: [1000.0, 500.0]
+        Zu: [1000.0, 500.0]
+        zl: [800.0, 500.0]
+        zu: [800.0, 500.0]
